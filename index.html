@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Plan your perfect aquarium with our comprehensive fish, snail, and shrimp compatibility checker. Get warnings for bioload, temperature mismatches, territorial conflicts, and more.">
+  <title>AquaPlanner - Smart Aquarium Planning Tool</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐠</text></svg>">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header__content">
+        <div class="header__logo">
+          <div class="header__logo-icon">🐠</div>
+          <div>
+            <h1 class="header__title">AquaPlanner</h1>
+            <p class="header__subtitle">Smart Aquarium Planning Tool</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="app-layout">
+
+      <!-- Left Panel: Tank Configuration -->
+      <aside class="tank-config glass-card">
+        <h2 class="tank-config__title">
+          <span class="tank-config__title-icon">🪣</span>
+          Tank Setup
+        </h2>
+
+        <!-- Tank Size Presets -->
+        <div class="tank-sizes">
+          <button class="tank-size-btn" data-gallons="5">
+            <span class="tank-size-btn__gallons">5</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="10">
+            <span class="tank-size-btn__gallons">10</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="20">
+            <span class="tank-size-btn__gallons">20</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="29">
+            <span class="tank-size-btn__gallons">29</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="40">
+            <span class="tank-size-btn__gallons">40</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="55">
+            <span class="tank-size-btn__gallons">55</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="75">
+            <span class="tank-size-btn__gallons">75</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="90">
+            <span class="tank-size-btn__gallons">90</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+          <button class="tank-size-btn" data-gallons="125">
+            <span class="tank-size-btn__gallons">125</span>
+            <span class="tank-size-btn__label">gallons</span>
+          </button>
+        </div>
+
+        <!-- Custom Tank Size -->
+        <div class="custom-tank">
+          <input type="number" id="custom-tank-size" class="custom-tank__input" placeholder="Custom size..." min="1"
+            max="1000">
+        </div>
+
+        <!-- Bioload Meter -->
+        <div class="bioload-meter">
+          <div class="bioload-meter__header">
+            <span class="bioload-meter__label">Tank Stocking Level</span>
+            <span class="bioload-meter__value text-success" id="bioload-value">0 / 30</span>
+          </div>
+          <div class="bioload-meter__bar">
+            <div class="bioload-meter__fill" id="bioload-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Tank Tips -->
+        <div style="margin-top: auto; padding-top: var(--space-6); border-top: 1px solid var(--glass-border);">
+          <h4 style="font-size: var(--font-size-sm); color: var(--color-gray-400); margin-bottom: var(--space-2);">💡
+            Quick Tips</h4>
+          <ul style="font-size: var(--font-size-xs); color: var(--color-gray-500); list-style: none;">
+            <li style="margin-bottom: var(--space-1);">• Keep bioload under 70% for best results</li>
+            <li style="margin-bottom: var(--space-1);">• Schooling fish need 6+ companions</li>
+            <li style="margin-bottom: var(--space-1);">• Never mix coldwater with tropical fish</li>
+          </ul>
+        </div>
+
+        <!-- Care Recommendations Panel -->
+        <div class="care-recommendations" id="care-recommendations" style="display: none;">
+          <h3 class="care-recommendations__title">
+            <span>📋</span>
+            Care Recommendations
+          </h3>
+          <div class="care-recommendations__content" id="care-recommendations-content">
+            <!-- Recommendations will be rendered here dynamically -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Panel: Species Browser -->
+      <section class="species-browser glass-card">
+        <div class="species-browser__header">
+          <!-- Search Box -->
+          <div class="search-box">
+            <span class="search-box__icon">🔍</span>
+            <input type="text" id="species-search" class="search-box__input"
+              placeholder="Search fish, snails, shrimp...">
+          </div>
+
+          <!-- Filter Tabs -->
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">
+              <span class="filter-tab__icon">🌊</span>
+              All
+            </button>
+            <button class="filter-tab" data-filter="fish">
+              <span class="filter-tab__icon">🐠</span>
+              Fish
+            </button>
+            <button class="filter-tab" data-filter="snail">
+              <span class="filter-tab__icon">🐌</span>
+              Snails
+            </button>
+            <button class="filter-tab" data-filter="shrimp">
+              <span class="filter-tab__icon">🦐</span>
+              Shrimp
+            </button>
+          </div>
+        </div>
+
+        <!-- Species Grid -->
+        <div class="species-grid" id="species-grid">
+          <!-- Species cards will be rendered here -->
+        </div>
+      </section>
+
+      <!-- Right Panel: Current Tank -->
+      <aside class="tank-panel glass-card">
+        <div class="tank-panel__header">
+          <h2 class="tank-panel__title">
+            <span>🐟</span>
+            Your Tank
+          </h2>
+          <span class="tank-panel__count" id="stock-count">0</span>
+        </div>
+
+        <!-- Visual Tank Display -->
+        <div class="visual-tank">
+          <div class="visual-tank__container">
+            <span class="visual-tank__info" id="visual-tank-info">20gal • 0 creatures</span>
+            <div class="visual-tank__species" id="visual-tank-species">
+              <span style="opacity: 0.4; font-size: 0.9rem;">Add fish to see them here!</span>
+            </div>
+            <div class="visual-tank__gravel"></div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-tank" id="empty-tank">
+          <div class="empty-tank__icon">🐟</div>
+          <p class="empty-tank__text">Your tank is empty!<br>Click on species to add them.</p>
+        </div>
+
+        <!-- Stock List -->
+        <div class="stock-list" id="stock-list" style="display: none;">
+          <!-- Stock items will be rendered here -->
+        </div>
+
+        <!-- Clear Button -->
+        <button class="btn btn--secondary btn--block" id="clear-tank-btn" style="margin-top: var(--space-4);">
+          Clear Tank
+        </button>
+
+        <!-- Warnings Panel -->
+        <div class="warnings-panel" id="warnings-panel" style="display: none;">
+          <h3 class="warnings-panel__title">
+            <span>⚠️</span>
+            Compatibility Issues
+          </h3>
+          <div class="warnings-list" id="warnings-list">
+            <!-- Warnings will be rendered here -->
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Species Detail Modal -->
+  <div class="modal-overlay" id="species-modal">
+    <div class="modal" id="modal-content">
+      <!-- Modal content will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Load Application -->
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

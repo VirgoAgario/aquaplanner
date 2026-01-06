@@ -41,6 +41,9 @@
             <p class="header__subtitle">Smart Aquarium Planning Tool</p>
           </div>
         </div>
+        <button class="header__settings-btn" id="open-settings-btn" title="Settings">
+          ⚙️
+        </button>
       </div>
     </div>
   </header>
@@ -229,6 +232,93 @@
   <div class="modal-overlay" id="species-modal">
     <div class="modal" id="modal-content">
       <!-- Modal content will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal settings-modal">
+      <div class="modal__header">
+        <div>
+          <h2 class="modal__title">⚙️ Settings</h2>
+          <p class="modal__subtitle">Preferences & Version Info</p>
+        </div>
+        <button class="modal__close" id="close-settings-btn">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <!-- Units Section -->
+        <div class="settings-section">
+          <h4 class="settings-section__title">📏 Units</h4>
+          <div class="settings-option">
+            <label class="settings-label">Volume</label>
+            <div class="settings-toggle-group">
+              <button class="settings-toggle active" data-setting="volume" data-value="gallons">Gallons</button>
+              <button class="settings-toggle" data-setting="volume" data-value="liters">Liters</button>
+            </div>
+          </div>
+          <div class="settings-option">
+            <label class="settings-label">Temperature</label>
+            <div class="settings-toggle-group">
+              <button class="settings-toggle active" data-setting="temp" data-value="fahrenheit">°F</button>
+              <button class="settings-toggle" data-setting="temp" data-value="celsius">°C</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="settings-section">
+          <h4 class="settings-section__title">💾 Data Management</h4>
+          <div class="settings-option">
+            <label class="settings-label">Tank Data</label>
+            <div class="settings-buttons">
+              <button class="btn btn--secondary btn--sm" id="export-tank-btn">📤 Export</button>
+              <button class="btn btn--danger btn--sm" id="clear-all-data-btn">🗑️ Clear All</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version Log -->
+        <div class="settings-section">
+          <h4 class="settings-section__title">📋 Version Log</h4>
+          <div class="version-log">
+            <div class="version-entry version-entry--current">
+              <span class="version-badge">v1.2.0</span>
+              <span class="version-date">Jan 2026</span>
+              <ul class="version-changes">
+                <li>Added mobile navigation bar</li>
+                <li>Added Care Recommendations panel</li>
+                <li>Fixed shrimp bioload values (now 0.1-0.75)</li>
+                <li>Updated fish compatibility from Reddit research</li>
+                <li>Added Settings panel</li>
+              </ul>
+            </div>
+            <div class="version-entry">
+              <span class="version-badge">v1.1.0</span>
+              <span class="version-date">Jan 2026</span>
+              <ul class="version-changes">
+                <li>Synced 50+ species from FishLore.com</li>
+                <li>Added scrollable image gallery</li>
+                <li>Improved compatibility warnings</li>
+              </ul>
+            </div>
+            <div class="version-entry">
+              <span class="version-badge">v1.0.0</span>
+              <span class="version-date">Dec 2025</span>
+              <ul class="version-changes">
+                <li>Initial release</li>
+                <li>Tank stocking calculator</li>
+                <li>Bioload meter</li>
+                <li>Species compatibility system</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <p class="settings-footer-text">Made with 🐠 by the AquaPlanner Team</p>
+      </div>
     </div>
   </div>
 

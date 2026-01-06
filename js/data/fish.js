@@ -146,7 +146,7 @@ export const fishData = [
         diet: 'omnivore',
         position: 'middle',
         incompatibleWith: ['betta', 'angelfish', 'oscar', 'cichlid-african'],
-        notes: 'Classic schooling fish with vibrant blue and red coloring. Keep in groups of 6+.'
+        notes: 'Classic schooling fish with vibrant blue and red coloring. Keep 6+ of same species. May loosely shoal with other small tetras (cardinals, embers) but prefer own kind.'
     },
     {
         id: 'cardinal-tetra',
@@ -171,7 +171,7 @@ export const fishData = [
         diet: 'omnivore',
         position: 'middle',
         incompatibleWith: ['betta', 'angelfish', 'oscar', 'cichlid-african'],
-        notes: 'Similar to neon tetras but with more extensive red coloring. Prefers softer water.'
+        notes: 'Similar to neon tetras but with more extensive red coloring. Prefers softer water. May shoal with neons but keep 6+ cardinals for best behavior.'
     },
     {
         id: 'rummy-nose-tetra',
@@ -273,7 +273,7 @@ export const fishData = [
         diet: 'omnivore',
         position: 'middle',
         incompatibleWith: ['oscar', 'cichlid-african', 'angelfish'],
-        notes: 'Tiny bright orange fish. Perfect for nano tanks. Keep in groups of 8+.'
+        notes: 'Tiny bright orange fish. Perfect for nano tanks. Keep 8+ for best display. May loosely shoal with other small tetras like neons.'
     },
     {
         id: 'congo-tetra',
@@ -1085,8 +1085,8 @@ export const fishData = [
         sameSpeciesAggression: true,
         diet: 'carnivore',
         position: 'top',
-        incompatibleWith: ['betta', 'guppy', 'tiger-barb', 'serpae-tetra', 'black-skirt-tetra'],
-        notes: 'Males cannot be kept together. Avoid tankmates with long fins or that nip fins. Needs surface access for air.'
+        incompatibleWith: ['betta', 'guppy', 'tiger-barb', 'serpae-tetra', 'black-skirt-tetra', 'dwarf-gourami', 'honey-gourami'],
+        notes: 'Males cannot be kept together. Compatibility varies by individual - some do well with corys, kuhli loaches, ember tetras, or snails. Avoid fin nippers and long-finned fish. Needs surface access for labyrinth organ.'
     },
 
     // === GOURAMIS ===
@@ -1098,7 +1098,7 @@ export const fishData = [
         icon: '🐠',
         minTankSize: 10,
         maxSize: 3.5,
-        temperament: 'peaceful',
+        temperament: 'semi-aggressive',
         careLevel: 'intermediate',
         waterParams: {
             tempMin: 72,
@@ -1111,8 +1111,8 @@ export const fishData = [
         sameSpeciesAggression: true,
         diet: 'omnivore',
         position: 'top',
-        incompatibleWith: ['betta', 'dwarf-gourami'],
-        notes: 'Males can be aggressive towards each other. Susceptible to Dwarf Gourami Iridovirus.'
+        incompatibleWith: ['betta', 'dwarf-gourami', 'honey-gourami', 'pearl-gourami'],
+        notes: 'Males aggressive towards other gouramis. HIGH RISK of Dwarf Gourami Iridovirus (DGI) - many die within months. Consider honey gourami as safer alternative.'
     },
     {
         id: 'pearl-gourami',
@@ -1158,8 +1158,8 @@ export const fishData = [
         preferredGroup: 2,
         diet: 'omnivore',
         position: 'top',
-        incompatibleWith: ['betta', 'oscar', 'cichlid-african'],
-        notes: 'Shy, peaceful gourami. Golden-yellow coloration. Great for community tanks.'
+        incompatibleWith: ['betta', 'oscar', 'cichlid-african', 'dwarf-gourami'],
+        notes: 'Shy, peaceful gourami - better choice than dwarf gourami (healthier). Works well with small tetras, rasboras, corys. Keep in pairs or trios.'
     },
 
     // === CORYDORAS ===

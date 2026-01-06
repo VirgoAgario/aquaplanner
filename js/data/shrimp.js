@@ -11,12 +11,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'beginner',
         waterParams: { tempMin: 65, tempMax: 80, phMin: 6.5, phMax: 8.0 },
-        bioload: 1,
+        bioload: 0.1,
         diet: 'omnivore',
         breeding: 'high',
         algaeEater: true,
-        incompatibleWith: ['angelfish', 'oscar', 'betta', 'cichlid-african', 'goldfish-fancy', 'goldfish-common', 'guppy'],
-        notes: 'Hardy beginner shrimp. Many color varieties. Will breed readily.'
+        incompatibleWith: ['angelfish', 'oscar', 'betta', 'cichlid-african', 'goldfish-fancy', 'goldfish-common', 'dwarf-gourami'],
+        notes: 'Hardy beginner shrimp. Best tank mates: otos, pygmy corys, chili rasboras, CPDs. Most fish will eat shrimplets - provide dense plants/moss. Negligible bioload.'
     },
     {
         id: 'amano-shrimp',
@@ -29,13 +29,13 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'beginner',
         waterParams: { tempMin: 70, tempMax: 80, phMin: 6.5, phMax: 7.5 },
-        bioload: 1,
+        bioload: 0.2,
         diet: 'omnivore',
         breeding: 'none',
         algaeEater: true,
         bestAlgaeEater: true,
         incompatibleWith: ['angelfish', 'oscar', 'cichlid-african'],
-        notes: 'Best algae-eating shrimp! Cannot breed in freshwater. Hardy and active.'
+        notes: 'Best algae-eating shrimp! Cannot breed in freshwater. Hardy and active. Almost zero bioload.'
     },
     {
         id: 'ghost-shrimp',
@@ -48,12 +48,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'beginner',
         waterParams: { tempMin: 65, tempMax: 80, phMin: 7.0, phMax: 8.0 },
-        bioload: 1,
+        bioload: 0.15,
         diet: 'omnivore',
         breeding: 'moderate',
         algaeEater: true,
         incompatibleWith: ['angelfish', 'oscar', 'cichlid-african'],
-        notes: 'Inexpensive, transparent body. Often sold as feeder shrimp. Hardy.'
+        notes: 'Inexpensive, transparent body. Often sold as feeder shrimp. Hardy. Very low bioload.'
     },
     {
         id: 'blue-velvet-shrimp',
@@ -66,12 +66,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'beginner',
         waterParams: { tempMin: 65, tempMax: 78, phMin: 6.5, phMax: 8.0 },
-        bioload: 1,
+        bioload: 0.1,
         diet: 'omnivore',
         breeding: 'high',
         algaeEater: true,
         incompatibleWith: ['angelfish', 'oscar', 'betta', 'cichlid-african'],
-        notes: 'Stunning blue coloration. Same care as cherry shrimp.'
+        notes: 'Stunning blue coloration. Same care as cherry shrimp. Negligible bioload.'
     },
     {
         id: 'crystal-red-shrimp',
@@ -84,12 +84,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'advanced',
         waterParams: { tempMin: 68, tempMax: 75, phMin: 5.8, phMax: 6.8 },
-        bioload: 1,
+        bioload: 0.1,
         diet: 'omnivore',
         breeding: 'moderate',
         algaeEater: true,
         incompatibleWith: ['angelfish', 'oscar', 'betta', 'cichlid-african', 'guppy'],
-        notes: 'Beautiful red/white stripes. Requires soft, acidic water. Sensitive.'
+        notes: 'Beautiful red/white stripes. Requires soft, acidic water. Sensitive. Negligible bioload.'
     },
     {
         id: 'bamboo-shrimp',
@@ -102,12 +102,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'intermediate',
         waterParams: { tempMin: 75, tempMax: 82, phMin: 6.5, phMax: 7.5 },
-        bioload: 2,
+        bioload: 0.5,
         diet: 'filter-feeder',
         breeding: 'none',
         algaeEater: false,
         incompatibleWith: ['oscar', 'cichlid-african'],
-        notes: 'Filter feeder - fans particles from water. Needs current and fine food.'
+        notes: 'Filter feeder - fans particles from water. Needs current and fine food. Low bioload for size.'
     },
     {
         id: 'vampire-shrimp',
@@ -120,12 +120,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'intermediate',
         waterParams: { tempMin: 74, tempMax: 84, phMin: 6.5, phMax: 7.5 },
-        bioload: 2,
+        bioload: 0.75,
         diet: 'filter-feeder',
         breeding: 'none',
         algaeEater: false,
         incompatibleWith: ['oscar', 'cichlid-african'],
-        notes: 'Large filter-feeding shrimp. Peaceful despite name. Blue to tan color.'
+        notes: 'Large filter-feeding shrimp. Peaceful despite name. Blue to tan color. Low bioload for size.'
     },
     {
         id: 'orange-sakura',
@@ -138,12 +138,12 @@ export const shrimpData = [
         temperament: 'peaceful',
         careLevel: 'beginner',
         waterParams: { tempMin: 65, tempMax: 78, phMin: 6.5, phMax: 8.0 },
-        bioload: 1,
+        bioload: 0.1,
         diet: 'omnivore',
         breeding: 'high',
         algaeEater: true,
         incompatibleWith: ['angelfish', 'oscar', 'betta', 'cichlid-african'],
-        notes: 'Vibrant orange color variant. Easy to keep and breed.'
+        notes: 'Vibrant orange color variant. Easy to keep and breed. Negligible bioload.'
     }
 ];
 

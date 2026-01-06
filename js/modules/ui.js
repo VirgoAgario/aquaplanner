@@ -235,6 +235,58 @@ class UIManager {
         tankManager.clearTank();
       });
     }
+
+    // Mobile navigation
+    document.querySelectorAll('.mobile-nav__btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const view = e.currentTarget.dataset.view;
+        this.switchMobileView(view);
+      });
+    });
+  }
+
+  // Switch mobile view
+  switchMobileView(view) {
+    const tankConfig = document.querySelector('.tank-config');
+    const tankPanel = document.querySelector('.tank-panel');
+    const speciesBrowser = document.querySelector('.species-browser');
+    const navBtns = document.querySelectorAll('.mobile-nav__btn');
+
+    // Update nav buttons
+    navBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.view === view);
+    });
+
+    // Hide all panels first
+    tankConfig?.classList.remove('mobile-active');
+    tankPanel?.classList.remove('mobile-active');
+    speciesBrowser?.classList.remove('mobile-hidden');
+
+    // Show selected view
+    switch (view) {
+      case 'tank':
+        tankPanel?.classList.add('mobile-active');
+        speciesBrowser?.classList.add('mobile-hidden');
+        break;
+      case 'setup':
+        tankConfig?.classList.add('mobile-active');
+        speciesBrowser?.classList.add('mobile-hidden');
+        break;
+      case 'browse':
+      default:
+        // Species browser is shown by default
+        break;
+    }
+  }
+
+  // Update mobile tank badge
+  updateMobileBadge() {
+    const badge = document.getElementById('mobile-tank-count');
+    if (badge) {
+      const count = tankManager.getTotalSpeciesCount();
+      badge.textContent = count;
+      badge.setAttribute('data-count', count);
+    }
   }
 
   updateTankButtons(activeGallons) {
@@ -849,6 +901,7 @@ class UIManager {
     this.renderStockList();
     this.renderWarnings();
     this.renderCareRecommendations();
+    this.updateMobileBadge();
   }
 
   capitalizeFirst(str) {

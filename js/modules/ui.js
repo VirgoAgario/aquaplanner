@@ -243,6 +243,100 @@ class UIManager {
         this.switchMobileView(view);
       });
     });
+
+    // Settings modal open/close
+    const openSettingsBtn = document.getElementById('open-settings-btn');
+    const closeSettingsBtn = document.getElementById('close-settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+
+    if (openSettingsBtn) {
+      openSettingsBtn.addEventListener('click', () => {
+        settingsModal?.classList.add('active');
+      });
+    }
+
+    if (closeSettingsBtn) {
+      closeSettingsBtn.addEventListener('click', () => {
+        settingsModal?.classList.remove('active');
+      });
+    }
+
+    if (settingsModal) {
+      settingsModal.addEventListener('click', (e) => {
+        if (e.target === settingsModal) {
+          settingsModal.classList.remove('active');
+        }
+      });
+    }
+
+    // Settings toggles
+    document.querySelectorAll('.settings-toggle').forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        const setting = e.currentTarget.dataset.setting;
+        const value = e.currentTarget.dataset.value;
+
+        // Update UI
+        e.currentTarget.parentElement.querySelectorAll('.settings-toggle')
+          .forEach(t => t.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+
+        // Save to localStorage
+        localStorage.setItem(`aquaplanner_${setting}`, value);
+
+        // Trigger re-render if needed
+        this.render();
+      });
+    });
+
+    // Export tank data
+    const exportBtn = document.getElementById('export-tank-btn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        const data = {
+          tankSize: tankManager.getTankSize(),
+          stock: tankManager.getStock().map(item => ({
+            id: item.species.id,
+            quantity: item.quantity
+          })),
+          exportedAt: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `aquaplanner-tank-${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    // Clear all data
+    const clearAllBtn = document.getElementById('clear-all-data-btn');
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear all tank data? This cannot be undone.')) {
+          tankManager.clearTank();
+          localStorage.removeItem('aquaplanner_tank');
+          settingsModal?.classList.remove('active');
+        }
+      });
+    }
+
+    // Load saved settings
+    this.loadSettings();
+  }
+
+  // Load saved settings from localStorage
+  loadSettings() {
+    const volume = localStorage.getItem('aquaplanner_volume') || 'gallons';
+    const temp = localStorage.getItem('aquaplanner_temp') || 'fahrenheit';
+
+    document.querySelectorAll(`[data-setting="volume"]`).forEach(t => {
+      t.classList.toggle('active', t.dataset.value === volume);
+    });
+    document.querySelectorAll(`[data-setting="temp"]`).forEach(t => {
+      t.classList.toggle('active', t.dataset.value === temp);
+    });
   }
 
   // Switch mobile view

@@ -13,6 +13,23 @@
 </head>
 
 <body>
+  <!-- Mobile Navigation Bar -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav__btn active" data-view="browse">
+      <span class="mobile-nav__icon">🐠</span>
+      <span class="mobile-nav__label">Browse</span>
+    </button>
+    <button class="mobile-nav__btn" data-view="tank">
+      <span class="mobile-nav__icon">🐟</span>
+      <span class="mobile-nav__label">My Tank</span>
+      <span class="mobile-nav__badge" id="mobile-tank-count">0</span>
+    </button>
+    <button class="mobile-nav__btn" data-view="setup">
+      <span class="mobile-nav__icon">⚙️</span>
+      <span class="mobile-nav__label">Setup</span>
+    </button>
+  </nav>
+
   <!-- Header -->
   <header class="header">
     <div class="container">

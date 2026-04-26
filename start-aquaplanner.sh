@@ -2,7 +2,7 @@
 # AquaPlanner Launcher
 # Starts the local web server and opens the browser
 
-cd /home/swag/antigravity
+cd "$(dirname "$0")"
 
 # Kill any existing server on port 8080
 pkill -f "python3 -m http.server 8080" 2>/dev/null

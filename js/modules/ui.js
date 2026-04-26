@@ -149,15 +149,59 @@ const SPECIES_IMAGES = {
   // === SNAILS (null = use emoji) ===
   'mystery-snail': null,
   'nerite-snail': null,
+  'horned-nerite': null,
   'assassin-snail': null,
   'ramshorn-snail': null,
   'bladder-snail': null,
+  'pond-snail': null,
   'mts': null,
+  'apple-snail': null,
+  'rabbit-snail': null,
+  'japanese-trapdoor': null,
+  'ivory-snail': null,
+  'pagoda-snail': null,
+  'colombian-ramshorn': null,
   // === SHRIMP (null = use emoji) ===
   'cherry-shrimp': null,
   'amano-shrimp': null,
   'ghost-shrimp': null,
-  'crystal-red-shrimp': null
+  'crystal-red-shrimp': null,
+  'blue-velvet-shrimp': null,
+  'bamboo-shrimp': null,
+  'vampire-shrimp': null,
+  'orange-sakura': null,
+  'green-jade-shrimp': null,
+  'yellow-shrimp': null,
+  'snowball-shrimp': null,
+  'tiger-shrimp': null,
+  'rili-shrimp': null,
+  'pinto-shrimp': null,
+  // === PLANTS (null = use emoji) ===
+  'java-fern': null,
+  'java-moss': null,
+  'christmas-moss': null,
+  'anubias-nana': null,
+  'anubias-coffeefolia': null,
+  'anubias-barteri': null,
+  'amazon-sword': null,
+  'vallisneria-spiralis': null,
+  'vallisneria-americana': null,
+  'cryptocoryne-wendtii': null,
+  'cryptocoryne-parva': null,
+  'hornwort': null,
+  'cabomba': null,
+  'water-sprite': null,
+  'ludwigia-repens': null,
+  'rotala-rotundifolia': null,
+  'dwarf-hairgrass': null,
+  'monte-carlo': null,
+  'duckweed': null,
+  'frogbit': null,
+  'salvinia-minima': null,
+  'marimo-moss-ball': null,
+  'bucephalandra': null,
+  'water-wisteria': null,
+  'pearlweed': null
 };
 
 class UIManager {
@@ -168,8 +212,8 @@ class UIManager {
     this.selectedSpecies = null;
   }
 
-  init(fishData, snailData, shrimpData) {
-    this.allSpecies = [...fishData, ...snailData, ...shrimpData];
+  init(fishData, snailData, shrimpData, plantData) {
+    this.allSpecies = [...fishData, ...snailData, ...shrimpData, ...plantData];
     this.setupEventListeners();
     this.render();
 
@@ -310,6 +354,51 @@ class UIManager {
       });
     }
 
+    // Import tank data
+    const importBtn = document.getElementById('import-tank-btn');
+    const importInput = document.getElementById('import-tank-input');
+    if (importBtn && importInput) {
+      importBtn.addEventListener('click', () => {
+        importInput.click();
+      });
+      importInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = JSON.parse(event.target.result);
+            // Validate and import
+            if (data.tankSize) {
+              tankManager.setTankSize(data.tankSize);
+              const customInput = document.getElementById('custom-tank-size');
+              if (customInput) customInput.value = data.tankSize;
+              const matchingBtn = document.querySelector(`.tank-size-btn[data-gallons="${data.tankSize}"]`);
+              if (matchingBtn) {
+                document.querySelectorAll('.tank-size-btn').forEach(b => b.classList.remove('active'));
+                matchingBtn.classList.add('active');
+              }
+            }
+            if (data.stock && Array.isArray(data.stock)) {
+              tankManager.clearTank();
+              data.stock.forEach(item => {
+                const species = this.allSpecies.find(s => s.id === item.id);
+                if (species) {
+                  tankManager.addSpecies(species, item.quantity || 1);
+                }
+              });
+            }
+            alert('✅ Tank imported successfully!');
+          } catch (err) {
+            alert('❌ Invalid file format. Please export a valid tank config.');
+          }
+        };
+        reader.readAsText(file);
+        // Reset input so same file can be re-imported
+        importInput.value = '';
+      });
+    }
+
     // Clear all data
     const clearAllBtn = document.getElementById('clear-all-data-btn');
     if (clearAllBtn) {
@@ -337,6 +426,31 @@ class UIManager {
     document.querySelectorAll(`[data-setting="temp"]`).forEach(t => {
       t.classList.toggle('active', t.dataset.value === temp);
     });
+  }
+
+  convertValue(value, setting) {
+    const volumeSetting = localStorage.getItem('aquaplanner_volume') || 'gallons';
+    const tempSetting = localStorage.getItem('aquaplanner_temp') || 'fahrenheit';
+    
+    if (setting === 'volume') {
+      if (volumeSetting === 'liters') {
+        return Math.round(value * 3.785) + ' L';
+      }
+      return value + ' gal';
+    }
+    if (setting === 'temp') {
+      if (tempSetting === 'celsius') {
+        return Math.round((value - 32) * 5 / 9) + '°C';
+      }
+      return value + '°F';
+    }
+    if (setting === 'size') {
+      if (volumeSetting === 'liters') {
+        return Math.round(value * 2.54) + ' cm';
+      }
+      return value + '"';
+    }
+    return value;
   }
 
   // Switch mobile view
@@ -416,6 +530,19 @@ class UIManager {
     const filtered = this.getFilteredSpecies();
     const stock = tankManager.getStock();
 
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="species-grid__empty">
+          <div class="species-grid__empty-icon">🔍</div>
+          <div class="species-grid__empty-text">No species found</div>
+          <div class="species-grid__empty-hint">
+            ${this.searchTerm ? 'Try adjusting your search terms.' : 'None available for this filter.'}
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     grid.innerHTML = filtered.map(species => {
       const inTank = stock.some(s => s.species.id === species.id);
       const count = tankManager.getSpeciesCount(species.id);
@@ -433,11 +560,11 @@ class UIManager {
           <div class="species-card__stats">
             <span class="species-card__stat">
               <span class="species-card__stat-icon">📏</span>
-              ${species.maxSize}"
+              ${this.convertValue(species.maxSize, 'size')}
             </span>
             <span class="species-card__stat">
               <span class="species-card__stat-icon">🪣</span>
-              ${species.minTankSize}g+
+              ${this.convertValue(species.minTankSize, 'volume')}
             </span>
             <span class="species-card__stat badge--${species.temperament}">
               ${this.capitalizeFirst(species.temperament)}
@@ -724,7 +851,7 @@ class UIManager {
     let html = '';
 
     // Temperature
-    const tempRange = minTemp <= maxTemp ? `${minTemp}°F - ${maxTemp}°F` : 'Conflict!';
+    const tempRange = minTemp <= maxTemp ? `${this.convertValue(minTemp, 'temp')} - ${this.convertValue(maxTemp, 'temp')}` : 'Conflict!';
     const tempClass = minTemp > maxTemp ? 'care-rec-item--warning' : '';
     html += `
       <div class="care-rec-item ${tempClass}">
@@ -894,7 +1021,7 @@ class UIManager {
           <p class="modal__scientific">${species.scientificName}</p>
           ${isPest ? '<span class="badge badge--pest" style="margin-top: 8px; display: inline-block;">⚠️ Pest Species</span>' : ''}
         </div>
-        <button class="modal__close">✕</button>
+        <button class="modal__close" aria-label="Close modal">✕</button>
       </div>
       <div class="modal__body">
         ${this.getSpeciesImage(speciesId, species.icon)}
@@ -904,11 +1031,11 @@ class UIManager {
           <div class="modal__stats-grid">
             <div class="modal__stat">
               <div class="modal__stat-label">Max Size</div>
-              <div class="modal__stat-value">${species.maxSize} inches</div>
+              <div class="modal__stat-value">${this.convertValue(species.maxSize, 'size')}</div>
             </div>
             <div class="modal__stat">
               <div class="modal__stat-label">Min Tank Size</div>
-              <div class="modal__stat-value">${species.minTankSize} gallons</div>
+              <div class="modal__stat-value">${this.convertValue(species.minTankSize, 'volume')}</div>
             </div>
             <div class="modal__stat">
               <div class="modal__stat-label">Temperament</div>
@@ -938,7 +1065,7 @@ class UIManager {
           <div class="modal__stats-grid">
             <div class="modal__stat">
               <div class="modal__stat-label">Temperature</div>
-              <div class="modal__stat-value">${species.waterParams.tempMin}°F - ${species.waterParams.tempMax}°F</div>
+              <div class="modal__stat-value">${this.convertValue(species.waterParams.tempMin, 'temp')} - ${this.convertValue(species.waterParams.tempMax, 'temp')}</div>
             </div>
             <div class="modal__stat">
               <div class="modal__stat-label">pH Range</div>
@@ -978,12 +1105,21 @@ class UIManager {
     });
 
     modal.classList.add('active');
+
+    // Focus first focusable element
+    setTimeout(() => {
+      const firstFocusable = modal.querySelector('button, input, [tabindex]');
+      if (firstFocusable) firstFocusable.focus();
+    }, 100);
   }
 
   closeModal() {
     const modal = document.getElementById('species-modal');
     if (modal) {
       modal.classList.remove('active');
+      // Restore focus to the last clicked card
+      const speciesCard = document.querySelector(`[data-species-id="${this.selectedSpecies?.id}"]`);
+      if (speciesCard) speciesCard.focus();
       this.selectedSpecies = null;
     }
   }

@@ -2,6 +2,7 @@
 import { fishData } from './data/fish.js';
 import { snailData } from './data/snails.js';
 import { shrimpData } from './data/shrimp.js';
+import { plantData } from './data/plants.js';
 import { uiManager } from './modules/ui.js';
 import tankManager from './modules/tank.js';
 
@@ -10,13 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('🐠 Aquarium Planner initialized!');
 
     // Combine all species data
-    const allSpecies = [...fishData, ...snailData, ...shrimpData];
+    const allSpecies = [...fishData, ...snailData, ...shrimpData, ...plantData];
 
     // Set species data on tank manager (this also loads from localStorage if available)
     tankManager.setSpeciesData(allSpecies);
 
     // Initialize UI with all species data
-    uiManager.init(fishData, snailData, shrimpData);
+    uiManager.init(fishData, snailData, shrimpData, plantData);
 
     // Update tank size button to match restored tank size
     const restoredSize = tankManager.getTankSize();

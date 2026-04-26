@@ -243,6 +243,46 @@ export const snailData = [
         isPest: false,
         incompatibleWith: ['yoyo-loach', 'clown-loach', 'assassin-snail'],
         notes: 'White/cream colored mystery snail variant. Same care as mystery snails.'
+    },
+    {
+        id: 'pagoda-snail',
+        type: 'snail',
+        commonName: 'Pagoda Snail',
+        scientificName: 'Brotia pagodula',
+        icon: '🐌',
+        minTankSize: 10,
+        maxSize: 1.5,
+        temperament: 'peaceful',
+        careLevel: 'intermediate',
+        waterParams: { tempMin: 72, tempMax: 82, phMin: 7.0, phMax: 8.5 },
+        bioload: 1,
+        diet: 'herbivore',
+        breeding: 'low',
+        algaeEater: true,
+        plantsafe: true,
+        isPest: false,
+        incompatibleWith: ['yoyo-loach', 'clown-loach', 'assassin-snail'],
+        notes: 'Distinctive spiral shell with spikes. Also called Horned or Trumpet Snail. Needs hard water for shell health. Very interesting appearance.'
+    },
+    {
+        id: 'colombian-ramshorn',
+        type: 'snail',
+        commonName: 'Colombian Ramshorn',
+        scientificName: 'Marisa cornuarietis',
+        icon: '🐌',
+        minTankSize: 10,
+        maxSize: 2,
+        temperament: 'peaceful',
+        careLevel: 'beginner',
+        waterParams: { tempMin: 68, tempMax: 82, phMin: 7.0, phMax: 8.5 },
+        bioload: 3,
+        diet: 'herbivore',
+        breeding: 'high',
+        algaeEater: true,
+        plantsafe: false,
+        isPest: false,
+        incompatibleWith: ['yoyo-loach', 'clown-loach', 'assassin-snail'],
+        notes: '⚠️ WILL EAT LIVE PLANTS! Larger than regular ramshorns. Striking striped shell. Can grow to 2 inches. High bioload for a snail.'
     }
 ];
 

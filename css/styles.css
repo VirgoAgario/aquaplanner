@@ -657,6 +657,56 @@ h6 {
   gap: var(--space-4);
 }
 
+/* No Results State */
+.species-grid__empty {
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+  color: var(--color-gray-400);
+}
+
+.species-grid__empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.species-grid__empty-text {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-2);
+}
+
+.species-grid__empty-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+/* Card Fade-in Animation */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.species-card {
+  animation: cardFadeIn 0.3s ease both;
+}
+
+.species-card:nth-child(1) { animation-delay: 0s; }
+.species-card:nth-child(2) { animation-delay: 0.03s; }
+.species-card:nth-child(3) { animation-delay: 0.06s; }
+.species-card:nth-child(4) { animation-delay: 0.09s; }
+.species-card:nth-child(5) { animation-delay: 0.12s; }
+.species-card:nth-child(6) { animation-delay: 0.15s; }
+.species-card:nth-child(7) { animation-delay: 0.18s; }
+.species-card:nth-child(8) { animation-delay: 0.21s; }
+.species-card:nth-child(9) { animation-delay: 0.24s; }
+.species-card:nth-child(10) { animation-delay: 0.27s; }
+
 /* Species Card */
 .species-card {
   background: var(--glass-bg);
@@ -728,6 +778,10 @@ h6 {
 
 .species-card__type-badge.shrimp {
   color: var(--color-coral-light);
+}
+
+.species-card__type-badge.plant {
+  color: var(--color-seafoam);
 }
 
 .species-card__name {

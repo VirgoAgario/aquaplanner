@@ -102,6 +102,49 @@
 }
 
 /* ============================================
+   Theme: Coral Reef
+   ============================================ */
+[data-theme="coral"] {
+  --color-ocean-deep: #1a0a28;
+  --color-ocean-dark: #2d1547;
+  --color-ocean-mid: #5c2d6e;
+  --color-ocean-light: #8d4a9c;
+  --color-ocean-surface: #c77dff;
+  --color-coral: #ff4757;
+  --color-coral-light: #ff6b7a;
+  --color-coral-dark: #e83e4d;
+  --color-gold: #ffcc00;
+  --color-gold-light: #ffdb33;
+  --color-seafoam: #2ed573;
+  --color-seafoam-light: #4ade80;
+  --gradient-ocean: linear-gradient(135deg, #1a0a28 0%, #2d1547 50%, #5c2d6e 100%);
+  --shadow-glow: 0 0 20px rgba(199, 125, 255, 0.3);
+  --shadow-glow-coral: 0 0 20px rgba(255, 71, 87, 0.3);
+}
+
+/* ============================================
+   Theme: Planted Tank
+   ============================================ */
+[data-theme="planted"] {
+  --color-ocean-deep: #0a1a12;
+  --color-ocean-dark: #0f2d1f;
+  --color-ocean-mid: #1a4a2e;
+  --color-ocean-light: #2d7a4c;
+  --color-ocean-surface: #4ddb7e;
+  --color-coral: #2ed573;
+  --color-coral-light: #4ade80;
+  --color-coral-dark: #26b863;
+  --color-gold: #ffd93d;
+  --color-gold-light: #ffe066;
+  --color-seafoam: #4db8d6;
+  --color-seafoam-light: #6bcbd7;
+  --gradient-ocean: linear-gradient(135deg, #0a1a12 0%, #0f2d1f 50%, #1a4a2e 100%);
+  --gradient-coral: linear-gradient(135deg, #2ed573 0%, #26b863 100%);
+  --shadow-glow: 0 0 20px rgba(77, 219, 126, 0.3);
+  --shadow-glow-coral: 0 0 20px rgba(46, 213, 115, 0.3);
+}
+
+/* ============================================
    Base Styles
    ============================================ */
 *,
@@ -503,6 +546,101 @@ h6 {
 
 .custom-tank__input::placeholder {
   color: var(--color-gray-500);
+}
+
+/* Tank Dimensions */
+.tank-dimensions {
+  margin-bottom: var(--space-6);
+}
+
+.tank-dimensions__details {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.tank-dimensions__summary {
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray-300);
+  transition: color var(--transition-fast);
+}
+
+.tank-dimensions__summary:hover {
+  color: var(--color-white);
+}
+
+.tank-dimensions__summary::marker {
+  color: var(--color-ocean-surface);
+}
+
+.tank-dimensions__inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  padding-top: 0;
+}
+
+.tank-dimensions__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tank-dimensions__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  font-weight: 500;
+}
+
+.tank-dimensions__input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  width: 100%;
+}
+
+.tank-dimensions__input:focus {
+  outline: none;
+  border-color: var(--color-ocean-surface);
+  box-shadow: 0 0 0 2px rgba(77, 184, 214, 0.2);
+}
+
+.tank-dimensions__input::placeholder {
+  color: var(--color-gray-500);
+}
+
+.tank-dimensions__calc {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--glass-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.tank-dimensions__result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tank-dimensions__result-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+.tank-dimensions__result-value {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-ocean-surface);
 }
 
 /* Bioload Meter */

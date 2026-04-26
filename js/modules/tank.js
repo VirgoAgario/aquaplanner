@@ -16,6 +16,7 @@ class TankManager {
     setSpeciesData(speciesData) {
         this.allSpecies = speciesData;
         this.loadFromStorage();
+        this.loadDimensions();
     }
 
     setTankSize(gallons) {
@@ -179,9 +180,108 @@ class TankManager {
     clearStorage() {
         try {
             localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem('aquaplanner_dimensions');
         } catch (e) {
             console.warn('Failed to clear localStorage:', e);
         }
+    }
+
+    // Tank dimensions (optional)
+    setDimensions(length, width, height) {
+        this.dimensions = { length, width, height };
+        this.saveDimensions();
+        this.notifyListeners();
+    }
+
+    getDimensions() {
+        return this.dimensions || null;
+    }
+
+    // Calculate surface area in sq inches
+    getSurfaceArea() {
+        if (!this.dimensions) return null;
+        return Math.round(this.dimensions.length * this.dimensions.width);
+    }
+
+    // Calculate estimated water volume (subtracting ~10% for substrate/decor)
+    getEstimatedWaterVolume() {
+        if (!this.dimensions) return null;
+        const rawVolume = (this.dimensions.length * this.dimensions.width * this.dimensions.height) / 231; // cubic inches to gallons
+        return Math.round(rawVolume * 0.9 * 10) / 10; // 90% for substrate, rounded to 1 decimal
+    }
+
+    // Get minimum recommended length for fish in tank
+    getMinLengthCheck() {
+        if (!this.dimensions) return null;
+        const length = this.dimensions.length;
+        const checks = [];
+        
+        // Check if any fish need more space than available
+        this.stock.forEach(item => {
+            const sp = item.species;
+            // Angelfish need tall tanks (18"+ height)
+            if (sp.id === 'angelfish' && this.dimensions.height < 18) {
+                checks.push({
+                    species: sp.commonName,
+                    issue: 'needs taller tank (18"+ height recommended)',
+                    severity: 'warning'
+                });
+            }
+            // Discus need tall tanks
+            if (sp.id === 'discus' && this.dimensions.height < 20) {
+                checks.push({
+                    species: sp.commonName,
+                    issue: 'needs taller tank (20"+ height recommended)',
+                    severity: 'warning'
+                });
+            }
+            // Active swimmers (danios, rainbows, barbs) need length
+            const activeSwimmers = ['bala-shark', 'tinfoil-barb', 'rainbow-fish', 'zebra-danio', 'giant-danio', 'clown-loach'];
+            if (activeSwimmers.includes(sp.id) && length < 48) {
+                checks.push({
+                    species: sp.commonName,
+                    issue: 'active swimmer - needs 48"+ length tank',
+                    severity: 'info'
+                });
+            }
+            // Big fish need length
+            if ((sp.maxSize || 0) >= 10 && length < 60) {
+                checks.push({
+                    species: sp.commonName,
+                    issue: `grows to ${sp.maxSize}" - needs 60"+ length tank`,
+                    severity: 'warning'
+                });
+            }
+        });
+        
+        return checks.length > 0 ? checks : null;
+    }
+
+    // Save dimensions to localStorage
+    saveDimensions() {
+        try {
+            if (this.dimensions) {
+                localStorage.setItem('aquaplanner_dimensions', JSON.stringify(this.dimensions));
+            } else {
+                localStorage.removeItem('aquaplanner_dimensions');
+            }
+        } catch (e) {
+            console.warn('Failed to save dimensions:', e);
+        }
+    }
+
+    // Load dimensions from localStorage
+    loadDimensions() {
+        try {
+            const saved = localStorage.getItem('aquaplanner_dimensions');
+            if (saved) {
+                this.dimensions = JSON.parse(saved);
+                return true;
+            }
+        } catch (e) {
+            console.warn('Failed to load dimensions:', e);
+        }
+        return false;
     }
 }
 

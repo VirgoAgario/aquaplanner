@@ -243,6 +243,19 @@ class UIManager {
       });
     }
 
+    // Tank dimension inputs
+    ['length', 'width', 'height'].forEach(dim => {
+      const input = document.getElementById(`tank-${dim}`);
+      if (input) {
+        input.addEventListener('change', (e) => {
+          this.updateDimensions();
+        });
+        input.addEventListener('input', (e) => {
+          this.updateDimensions();
+        });
+      }
+    });
+
     // Search input
     const searchInput = document.getElementById('species-search');
     if (searchInput) {
@@ -327,6 +340,11 @@ class UIManager {
         // Save to localStorage
         localStorage.setItem(`aquaplanner_${setting}`, value);
 
+        // Apply theme immediately
+        if (setting === 'theme') {
+          document.documentElement.setAttribute('data-theme', value);
+        }
+
         // Trigger re-render if needed
         this.render();
       });
@@ -410,6 +428,14 @@ class UIManager {
         }
       });
     }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('aquaplanner_theme') || 'ocean';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const themeToggles = document.querySelectorAll('[data-setting="theme"]');
+    themeToggles.forEach(t => {
+      t.classList.toggle('active', t.dataset.value === savedTheme);
+    });
 
     // Load saved settings
     this.loadSettings();
@@ -953,6 +979,41 @@ class UIManager {
     content.innerHTML = html;
   }
 
+  updateDimensions() {
+    const length = parseFloat(document.getElementById('tank-length')?.value) || 0;
+    const width = parseFloat(document.getElementById('tank-width')?.value) || 0;
+    const height = parseFloat(document.getElementById('tank-height')?.value) || 0;
+
+    const calcEl = document.getElementById('tank-dimensions-calc');
+    const surfaceEl = document.getElementById('dims-surface-area');
+    const volumeEl = document.getElementById('dims-water-volume');
+
+    if (length > 0 && width > 0 && height > 0) {
+      tankManager.setDimensions(length, width, height);
+      
+      const surfaceArea = tankManager.getSurfaceArea();
+      const waterVolume = tankManager.getEstimatedWaterVolume();
+      const dimSetting = localStorage.getItem('aquaplanner_volume') || 'gallons';
+      
+      if (surfaceEl) {
+        const sqIn = surfaceArea;
+        const sqFt = (surfaceArea / 144).toFixed(1);
+        surfaceEl.textContent = `${sqIn} sq in (${sqFt} sq ft)`;
+      }
+      if (volumeEl) {
+        if (dimSetting === 'liters') {
+          volumeEl.textContent = `${Math.round(waterVolume * 3.785)} L`;
+        } else {
+          volumeEl.textContent = `${waterVolume} gal`;
+        }
+      }
+      if (calcEl) calcEl.style.display = 'block';
+    } else {
+      if (calcEl) calcEl.style.display = 'none';
+      tankManager.setDimensions(null, null, null);
+    }
+  }
+
   getSpeciesImage(speciesId, icon) {
     const imageData = SPECIES_IMAGES[speciesId];
 
@@ -1132,6 +1193,7 @@ class UIManager {
     this.renderWarnings();
     this.renderCareRecommendations();
     this.updateMobileBadge();
+    this.updateDimensions();
   }
 
   capitalizeFirst(str) {
